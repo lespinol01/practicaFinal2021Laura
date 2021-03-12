@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Seleccione las butacas que desee</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div style="width: 370px; height: 380px; ">
+  <ion-button color="light"></ion-button><ion-label>Libres</ion-label>
+  <ion-button color="danger"></ion-button><ion-label>Ocupadas</ion-label><br>
+<ion-button color="light" *ngFor="let item of array; let indice = index " ([ngModel])="indice" id="butaca_num_{{indice}}" (click)="butacasClick('butaca_num_'+indice)">
+  {{indice+1}}
+</ion-button>
+</div>
+<ion-button color="dark" [routerLink]="['/resumen-pedido/', datosPedido|json]"  expand="full">Comprar entradas</ion-button>
+</ion-content>

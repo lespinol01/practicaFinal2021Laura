@@ -1,0 +1,121 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button>
+          <ion-icon name="home-outline" routerLink="/home-cine"></ion-icon>
+          <ion-label>HOME</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button>
+          <ion-icon name="person-circle" routerLink="/perfil"></ion-icon>
+          <ion-label>MI PERFIL</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-chip>
+    <ion-avatar>
+      <img src={{usuario.imagen}} />
+    </ion-avatar>
+    <ion-label>{{usuario.nombre}}</ion-label>
+  </ion-chip>
+
+  <hr color="black" size="3">
+  <ion-chip>
+    <ion-avatar>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Microsoft_Account.svg/245px-Microsoft_Account.svg.png" />
+    </ion-avatar>
+
+    <ion-label>Tu cuenta</ion-label>
+  </ion-chip>
+
+  <ion-button color="dark" [routerLink]="['/ver-mis-pedidos',usuario.id]">Ver mis pedidos</ion-button>
+
+  <ion-item>
+    <ion-tab-button (click)="presentActionSheet()">
+      <ion-icon name="camera"></ion-icon>
+      <ion-label>Imagen</ion-label>
+    </ion-tab-button>
+    <canvas #imageCanvas>
+    </canvas>
+  </ion-item>
+  <ion-item>
+    <ion-button color="dark" (click)="actualizarAvatar()">Actualizar avatar</ion-button>
+  </ion-item>
+  <br>
+
+  <form [formGroup]="controlForm" *ngFor="let item of nombreControles; let i = index ">
+
+    <ion-item>
+      <ion-label position="floating">{{item}}</ion-label>
+      <ion-input *ngIf="i != 1 && i != 2" [formControlName]=item name="{{item}}" type="text" [(ngModel)]="dataArray[i]">
+      </ion-input>
+      <ion-input *ngIf="i == 1 || i == 2" [formControlName]=item name="{{item}}" type="password"
+        [(ngModel)]="dataArray[i]"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="messageErrorActivo && !validateAllControlArray[i+1]">
+      <ion-label class="colorError">{{errorAllControlArray[i]
+        }}</ion-label>
+    </ion-item>
+
+    <div *ngIf="i == 2">
+      <ion-label>Vincular con Facebook</ion-label>
+      <ion-icon slot="start" name="logo-facebook"></ion-icon>
+      <ion-toggle color="dark" slot="end" checked></ion-toggle><br>
+      <hr color="black" size="3">
+
+      <ion-chip>
+        <ion-avatar>
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Microsoft_Account.svg/245px-Microsoft_Account.svg.png" />
+        </ion-avatar>
+        <ion-label>Datos personales</ion-label>
+      </ion-chip>
+    </div>
+
+    <div *ngIf="i == 5">
+      <ion-chip>
+        <ion-avatar>
+          <img
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAllBMVEX///9ScP/z8/NPbv/+/fL29fNKav/7+/K2wPdthP1kff5HaP9uhfxMbP/ByfZAY/9EZv86X/+2wP82XP+frfn09v/p7P9Vcv/j5//M0//w8v/6+//S2P9fef3s7vOqtv/X3f+dq//EzP+wu/98kP+Rof/b4P/L0v+Lnf+El/+xvP94jP+Hmf/m6f+jsPmbqfqXpv/k5/R72z2wAAAJzElEQVR4nO2da1fqOBRAgdAUGmvSgoLyFIEr4hX9/39uio4v6OOc5KSpM9lfZq1ZF+wmaR4nyUmr5fF4PB6Px+PxeDwej8fj8Xg8DWJyPZ6u0sfFO/fp6mb798r1QxExXg0fIqakVEII/i9CZP9D8tH6Ll3+ZtFxupkNEsFj1s6HxZzLgVovphPXz4rnOt2JRBS6/SDmMukflr/Jcns3y+wgcl/FySXfrX5HjR3fjSQHld2ZpVLrlevHr2KSzjT1PiU3Y9cSJfzdJMJA7504iZpakNt9gnv3imCqnTaw2VleJMbF9+Uo+H3DHLcXks7vDRGnrqW+cbUjLL9P1OjGtdgHC6L37xQmL65dux1ZjoQVvzfHZOharzXZ2KigX4jR1q3gtM1t+rWPVfXOpeCL3QJ8R8ycvY23Ft/A77CBo0HODXUXWIx8cCE4TOryyxDRbe2Ca1Wj4HEcV3ObOpnZbkPPSGp9Gf+aT5I0FBf1CW7ra2O+I1/qEpxKF34Z6qkewT91NqI/Eev/uGCmuP+PC9ahOHUrmCnu7ApuXTUyX6iNTcG/7gWzTuNgT/DKRUd/TmIvRjVrhGCmOLUkuLYTcNJA/rUieKh3NlEGG9mIF/9pQivzAbfQLd42STDrM+jDjKOGtDIfDJbEgi/1BJ0QcNpX0flg7ZyYdJ4xaVgVfUNShjUeao/KQFB0GxsaWEePENbTJtbRIwnVAuMQ0Y4yAuB/jdMI3oLrqEjiyJyZktABsKDp96EDbsHSeUjCGLymJSmC/UtgEcrnbtChIQjnF7A3I6aIafRhP6echkR+b3Q3MEVpvoMKGP6VPVLBTHEPejkIeowIVIRs3aUV7HTmsJ82MS1EaBGOqd7BT8JDPYUIewvZjLwIO8ErrIlLzFb5x7C/Eh+I38IjXVj1ic1WwJ9gfSFPyStpZghrAtoDk4niZAD6G23es2EI7Ke4ycrpPXDW5NSQtQ0MocEZp4bZYENbcAmNr7k1jPWXhjfQMb5bw7bQbmvAMzWoYRAEYRgAfw24odKN2MB3JMAMg+7r5fPhcD8NQsg/hxsy3XENuJKCDIOwNxsIHnOuBrstYIQAN2wrzWoKD3MDDMPtSH1+H0t2ncpPIAzlHy1B4IgNZhimP6ftPH6t+gjCMNZb+V7Ag6SVhuHi9J1mqkoRYchGWoZ7eNCryjC4Oa8PjNGVoeYEA7GcVlmGeSEJ/lTe3GAMhc7SPmZjSYVheMit8En5tBljqDWsgY66AYZB/o8VP5QWIsawHWsY7hD7EsoNg8uCHQAJneFAY5UGs9xUbhi+FPxYclv2MZShws8vroCTX4Bh4aNqfiz3q/DTYPDMCfCoo6KPPZMZakRrUrpa2i38GJ0hm6EN7wgNi0JKcWkAC2XYFmjDNebrK1qah4KWRk3pDCV6VIPaP1PRW/QKVlkGZD1+9mstsYao/TMVPf48f5bC9qWRcmQt7SEFcZu8qkZt+YFlWVpJkYbo7mJMaRi85n0b69ONvLNHwB43WaK2WlbNLcJFztfJigkizhC9GryifA8zxd3Z9yWXFbEanCHrIw1TWsNM8WdFZZWCWMMIaYgIYYAMO+Hj9z0kajSujLYhDbGBDHLDTvi6SVTMGIu5bD8CIqY4wzZ2fWZIbpg5di5f9lG0e94SR4TfiJExU9SwFBHV73a70LA+0hC7o/bFiiEKpKFAzvI33vDXG/6+WsqRhvQtzXHp8Lh4+PEfckNkS0PbW2RW82n6sp5xKaVqR7vDatwJK/oMpCFDGhL2+GH3dfUwk1LEH9t/GeNCiv5h2imTtDymwUS8ywyD7ut9JFVeAkXGpVhfFksiDbGhqKLAA84wCHtRaQ4+JuTTtmDnreWR9w3B/DAMnmX1qdM4md3kliPSEHuaDXekOc8wCB8VrCIwGeWt6yNnwNiQ8LWpYfg6g1cDlmzOuw9kFAO7bf/K0DDs4bKD8NFZTAMZa3tEGqKWns4Nw2fsgUymTtdLkfFS9HYM4ObOfMOwp3FSSs5NDPGb9osi8bmcGEI3MP/kdCs10hB9tgQ1bDsx7KIWPb4e8jLQN8QfgUKFE08M55jV1S/YRVfbEB1MRO2IOjUMcMOFL0SobRhrZFjSX+UOeppHTn+2NbhVbo0NNZjGlMhQ6RvqHJ0p2kCRh3vDAV4Q1dScGgq9w6P6tVSjoclGpoim5sTwsn+hRaRtGGslOUWsc5/2+F1NOrqGegcSEKMa57G2RGsb9Areq7k21HoNURMo14a6R58Qf8Gxoe5B0ntwf+HYUGPL1zvwSIZjQ66dEBs8cHNsKLUz8D5Cq6lbQ82zCEfAralbQ5NDpNC5Ol/YMCzaeHuKSXKMG2Ahxjv60+qdADgw1j659gb4jCN9GQaXwFbA4JBsC94lipT8QD70sLrRQedWawJua+bVz4wi7AGHxVoHgr4BXe2u2kqJFgQng8Vv8P4JeCct788JHcMpdGIjjDO1gzdlsKxTPO5AOKdMJe/fh935Bj5gNE4uiNgOreKH9PKcm7Kyzfn3q8VegUNZ5kWI23cSc3FOMizsLIOZyvkA5mo6inxmE+PUs7JIMZiZ5u1V2B36uaQEinkVNTAX1J4YnmCenDVPMehExpmXkyWNITRjW6niWUUNzAXpUkM+mSf3PFM0r6LZl5Kl95wQpC89UQxGBIKEudlXBImgv7+LBI1MVkcv6ARbrR1pKVI0MkRZIT+hqKdfigSNzDGPIaVg1p7qLc2fPNS7IkUVJU4FfWRIkVX/TZGikWkznRQDFfQpbkbIFElK0DwhZA4TTILfQuQzzS9F/BK+gzt0WYTJndafCEu3d62aktY71lsuBIDecGgHgyh+JU9NuCGBEWabP2ffgAT7li6Z+aDvXFEurQq2WiS9mQFkufSbqliDYKbosKImesn1sETOFGVd98kDk95Tw6w3Ml/UfBnwv4LKbjfxk5f6RzfxqN5rnR/rHqMKa2PRIqaKYpIARlq9uTKf6xp7DWbxUscydnW9jDG3MKMH0YNeB2OGrOES4CKuI/vdBqMMbWswtF2Mqm92f4U5Y8RRUTxxgj44aYH7xNZsgyX7env5Iq52uBOxUNTI1q24eLZ9ekeBP9lrlZuI1pGroY0LcY34Q+go5NBmPE2b6QVJm8OUWDSu/D643ijDy8kZl33K+0XpmfT6gFwYRcSyfVfnNFeT6/so0ZDMSo9tmtM9VHCbrmVp1pZTu1gl0d3S9WMjWQ4vkqR6F94xyeBgtFk1su2sZty763MpBefxyQ2qb/kThZJq9rBYNrblBHI7Xt3f7fqzUcyVPKIEb8+i/WaRLl3PG4iZXF3dvnH12wvN4/F4PB6Px+PxeDwej8fj+T/yDy8I8exy/yjIAAAAAElFTkSuQmCC">
+        </ion-avatar>
+        <ion-label>Datos de contacto</ion-label>
+      </ion-chip>
+    </div>
+  </form>
+  <ion-item>
+    <ion-label position="stacked">Género</ion-label>
+    <ion-select placeholder="Selecciona" interface="action-sheet" value="{{usuario.genero}}"
+      [(ngModel)]="usuario.genero">
+      <ion-select-option value="selecciona">Selecciona</ion-select-option>
+      <ion-select-option value="mujer">Mujer</ion-select-option>
+      <ion-select-option value="hombre">Hombre</ion-select-option>
+    </ion-select>
+  </ion-item>
+  <ion-chip>
+    <ion-avatar>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Microsoft_Account.svg/245px-Microsoft_Account.svg.png" />
+    </ion-avatar>
+    <ion-label>Mi privacidad</ion-label>
+  </ion-chip>
+  <ion-item>
+    <ion-label>Quiero recibir promociones y otras comunicaciones comerciales(por e-mail,sms u otros canales
+      directos) que se adapten a mis gustos, mis hábitos de consumo y mi perfil comercial
+    </ion-label>
+    <ion-toggle color="dark" slot="start"></ion-toggle>
+  </ion-item>
+
+  <ion-button color="dark" expand="full" (click)="validateAndEditPerfil()">Guardar cambios</ion-button>
+
+</ion-content>

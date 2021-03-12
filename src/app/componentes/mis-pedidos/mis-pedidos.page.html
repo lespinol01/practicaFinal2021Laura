@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button>
+          <ion-icon name="home-outline" routerLink="/home-cine"></ion-icon>
+          <ion-label>HOME</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button>
+          <ion-icon name="person-circle" routerLink="/perfil"></ion-icon>
+          <ion-label>MI PERFIL</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-title style="text-align: center;">Mi pedido</ion-title>
+  <ion-card color="success" style="text-align: center;"><br>
+    <ion-label style="color:green;"><b>COMPLETADO</b></ion-label>
+    <h6 style="color:#887a5e;" ><b>{{carteleraModel.titulo}}</b></h6>
+    <ion-label style="color:#887a5e;" >Total entradas: {{datosPedido.numeroButaca}}</ion-label><br>
+    <ion-label style="color:#887a5e;" ><b>Total: {{datosPedido.resultado}}€</b></ion-label>
+  </ion-card>
+  <ion-button color="dark" (click)="verMisPedidos()">Ver mis pedidos</ion-button>
+</ion-content>

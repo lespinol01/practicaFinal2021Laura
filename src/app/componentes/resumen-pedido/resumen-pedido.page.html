@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Resumen de tu pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-item>
+        <img src="../../../assets/imgCartelera/{{carteleraModel.imagen}}" />
+      </ion-item>
+        <ion-title>{{carteleraModel.titulo}}</ion-title>
+        <ion-label>{{carteleraModel.estreno}}</ion-label><br>
+        <ion-label>{{datosPedido.horarioClickeado}}</ion-label>
+        <hr color="black" size="3">
+        <ion-label>Total entradas: {{datosPedido.numeroButaca}}</ion-label><br>
+       <ion-label>TOTAL: {{datosPedido.resultado}}€</ion-label><br>
+       <ion-label>IVA incluido (10% entradas).</ion-label><br>
+       <ion-label>Gastos de gestión por entrada incluidos</ion-label>
+       <ion-button color="dark" expand="full" (click)="confirmarPedido()">Confirmar pedido</ion-button>
+
+
+  </ion-card>
+</ion-content>

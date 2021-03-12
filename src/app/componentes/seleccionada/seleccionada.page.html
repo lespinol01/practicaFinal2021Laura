@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">Película</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card>
+<ion-item>
+    <img src="../../../assets/imgCartelera/{{carteleraModel.imagen}}" />
+  </ion-item>
+  <br>
+  <ion-label>Duración: {{carteleraModel.duracion}}</ion-label><br>
+  <ion-label>País: {{carteleraModel.pais}}</ion-label><br>
+  <ion-label>Género: {{carteleraModel.genero}}</ion-label><br>
+  <ion-label>Estreno: {{carteleraModel.estreno}}</ion-label><br>
+  <ion-label>Directores: {{carteleraModel.directores}}</ion-label><br>
+  <ion-label>Guionistas: {{carteleraModel.guionistas}}</ion-label><br>
+  <ion-label>Productores: {{carteleraModel.productores}}</ion-label><br>
+  <ion-label>Actores: {{carteleraModel.actores}}</ion-label>
+</ion-card>
+
+ <ion-item>
+  <ion-label>Digital</ion-label>
+  <ion-button (click)="horarioSeleccionadoUno('horarioUno')" id="horarioUno" color="warning">{{horariosModel.horarioUno}}</ion-button>
+  <ion-button (click)="horarioSeleccionadoDos('horarioDos')" id="horarioDos" color="warning">{{horariosModel.horarioDos}}</ion-button>
+  <ion-button (click)="horarioSeleccionadoTres('horarioTres')" id="horarioTres" color="warning">{{horariosModel.horarioTres}}</ion-button>
+  <ion-button color="dark" *ngIf="!boton" (click)="habilitarBotones()">Editar horario</ion-button>
+</ion-item>
+
+<ion-card>
+  <h5>Entradas</h5>
+<table>
+  <tr><th style="text-align: center;"><b>Selecciona número de entradas</b></th></tr>
+<tr>
+  <td>Normal   8,60€/u x {{rangeValue}} = <b>{{resultado}}€</b></td>
+</tr>
+<tr>
+  <ion-range [(ngModel)]="rangeValue" (click)="multiplicar()" min="1" max="10" color="secondary" pin="true" value="1">
+    <ion-label slot="start">1</ion-label>
+    <ion-label slot="end">10</ion-label>
+  </ion-range>
+</tr>
+<tr>
+  <td><ion-label>Total entradas: {{rangeValue}}</ion-label></td>
+</tr>
+</table>
+</ion-card>
+<ion-button color="dark" *ngIf="rangeValue != undefined && horarioClickeado != undefined && horarioClickeado !=''" expand="full" (click)="crearPedido()">Continuar</ion-button>
+</ion-content>
+
+

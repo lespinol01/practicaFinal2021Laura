@@ -1,0 +1,26 @@
+<ion-header style="background-color: #171719; ">
+  <img src="../../../assets/cineMagicc.jpeg" style="margin-left: 20px;">
+
+</ion-header>
+<ion-header>
+<img src="../../../assets/login.jpg">
+<ion-toolbar>
+  <ion-title color="dark">Iniciar sesión</ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="controlForm" *ngFor="let item of nombreControles; let i = index ">
+    <ion-item>
+    <ion-label position="floating">{{item}}</ion-label>
+      <ion-input *ngIf="i == 0" [formControlName]=item name="{{item}}" type="text" [(ngModel)]="dataArray[i]"></ion-input>
+      <ion-input *ngIf="i == 1" [formControlName]=item name="{{item}}" type="password" [(ngModel)]="dataArray[i]"></ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="messageErrorActivo && !validateAllControlArray[i+1]">
+      <ion-label class="colorError">{{errorAllControlArray[i]}}</ion-label>
+    </ion-item>
+    </form>
+  <ion-button color="dark" (click)="validateAndLogin()" expand="block">Entrar</ion-button>
+  <ion-label class="register" (click)="GoRegister()">¿Aún no estás registrado? Registrate</ion-label>
+</ion-content>

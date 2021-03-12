@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button routerLink="/home-cine">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>HOME</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button routerLink="/perfil">
+          <ion-icon name="person-circle"></ion-icon>
+          <ion-label>MI PERFIL</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+    <div slot="end" class="tooltip">
+      <ion-button color="dark" (click)="cerrarSesion()"><ion-icon name="exit-outline" alt="Cerrar sesión"></ion-icon></ion-button>
+      <span class="tooltiptext">Cerrar Sesión</span>
+    </div>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+      <h3 style="text-align: center;">Cartelera</h3>
+    <ion-row>
+      <ion-col size="12" *ngFor="let item of dataCartelera">
+    <ion-item>
+      <ion-card >
+        <img src="../../../assets/imgCartelera/{{item.imagen}}" />
+        <ion-card-header>
+          <ion-card-title>{{item.titulo}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{item.descripcion}}
+          <ion-button color="dark" [routerLink]="['/seleccionada/', item.id]" >
+           <ion-icon slot="icon-only" ios="add-outline" md="add-sharp"></ion-icon>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-col>
+  </ion-row>
+</ion-list>
+</ion-content>
